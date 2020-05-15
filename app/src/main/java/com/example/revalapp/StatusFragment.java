@@ -2,11 +2,20 @@ package com.example.revalapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 
 /**
@@ -23,6 +32,11 @@ public class StatusFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView mFirestoreList;
+    private FirebaseFirestore firebaseFirestore;
+
+    private FirestoreRecyclerAdapter adapter;
 
     public StatusFragment() {
         // Required empty public constructor
@@ -59,6 +73,71 @@ public class StatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_status, container, false);
+        View view = inflater.inflate(R.layout.fragment_status, container, false);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        mFirestoreList = view.findViewById(R.id.firestore_list);
+
+        //Query
+        Query query = firebaseFirestore.collection("312217205090");
+        //RecyclerOptions
+        FirestoreRecyclerOptions<StudentRecord> options = new FirestoreRecyclerOptions.Builder<StudentRecord>()
+                .setQuery(query,StudentRecord.class)
+                .build();
+
+        adapter = new FirestoreRecyclerAdapter<StudentRecord, StudentViewHolder>(options) {
+            @NonNull
+            @Override
+            public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_single, parent, false);
+                return new StudentViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull StudentViewHolder holder, int position, @NonNull StudentRecord model) {
+                holder.list_name.setText(model.getName());
+                holder.list_code.setText(model.getCode());
+                holder.list_grade.setText(model.getGrade());
+                holder.list_new_grade.setText(model.getNewGrade());
+
+            }
+        };
+
+        mFirestoreList.setHasFixedSize(true);
+        mFirestoreList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mFirestoreList.setAdapter(adapter);
+        //ViewHolder
+
+        return view;
+    }
+
+    private class StudentViewHolder extends RecyclerView.ViewHolder{
+
+        private TextView list_name;
+        private TextView list_code;
+        private TextView list_grade;
+        private TextView list_new_grade;
+
+        public StudentViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            list_name = itemView.findViewById(R.id.list_name);
+            list_code = itemView.findViewById(R.id.list_code);
+            list_grade = itemView.findViewById(R.id.list_grade);
+            list_new_grade = itemView.findViewById(R.id.list_new_grade);
+        }
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
 }
