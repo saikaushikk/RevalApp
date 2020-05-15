@@ -16,6 +16,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import android.widget.TextView;
 
 
 /**
@@ -74,6 +75,9 @@ public class StatusFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_status, container, false);
+        TextView tv = (TextView)view.findViewById(R.id.textView4);
+        String s = ((MyApplication) getActivity().getApplication()).getSomeVariable();
+        tv.setText("Hello " + s);
         firebaseFirestore = FirebaseFirestore.getInstance();
         mFirestoreList = view.findViewById(R.id.firestore_list);
 
