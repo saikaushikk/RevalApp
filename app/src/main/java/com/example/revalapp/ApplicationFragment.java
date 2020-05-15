@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -54,11 +55,14 @@ public class ApplicationFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_application, container, false);
+        View view =  inflater.inflate(R.layout.fragment_application, container, false);
+        TextView tv = (TextView)view.findViewById(R.id.textView5);
+        String s = ((MyApplication) getActivity().getApplication()).getSomeVariable();
+        tv.setText("Hello " + s);
+        return view;
     }
 }
