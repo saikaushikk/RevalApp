@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "337061306564",
+    "firebase_url": "https://reval-app-d8188.firebaseio.com",
+    "project_id": "reval-app-d8188",
+    "storage_bucket": "reval-app-d8188.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337061306564:android:39303c66a56cdc89866991",
+        "android_client_info": {
+          "package_name": "com.example.revalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337061306564-2eit5qioj5noc06308he2r62udbrer2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.revalapp",
+            "certificate_hash": "e45dcb6492652e7a24121193d6277710b00fcc6b"
+          }
+        },
+        {
+          "client_id": "337061306564-5qdh7ija6ltrvbdti0kfa5e0lj0j9td0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJqjvOZ4i33J0tY1ZrjMcF8_QgN-eJIyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337061306564-5qdh7ija6ltrvbdti0kfa5e0lj0j9td0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
