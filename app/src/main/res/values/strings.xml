@@ -5,4 +5,10 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="tab_text_1">APPLY FOR REVAL</string>
     <string name="tab_text_2">CHECK STATUS</string>
+    <string name="applicationFrag">APPLY</string>
+    <string name="statusFrag">STATUS</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
