@@ -2,12 +2,25 @@ package com.example.revalapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 /**
@@ -24,6 +37,18 @@ public class ApplicationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private String name;
+    private String code;
+    private String grade;
+    private String newGrade;
+
+    TextView Tname ;
+    TextView Tcode ;
+    TextView Tgrade;
+    // Access a Cloud Firestore instance from your Activity
+    FirebaseFirestore db;
+
 
     public ApplicationFragment() {
         // Required empty public constructor
@@ -61,8 +86,51 @@ public class ApplicationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_application, container, false);
         TextView tv = (TextView)view.findViewById(R.id.textView5);
-        String s = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-        tv.setText("Hello " + s);
+        final String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
+        tv.setText("Hello " + regNo);
+
+        //Writing to FireStore
+        Button button = view.findViewById(R.id.button2);
+        Tname = view.findViewById(R.id.edit_name);
+        Tcode = view.findViewById(R.id.edit_code);
+        Tgrade = view.findViewById(R.id.edit_grade);
+
+
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                db = FirebaseFirestore.getInstance();
+
+                name = Tname.getText().toString();
+                code = Tcode.getText().toString();
+                grade = Tgrade.getText().toString();
+
+                Map<String, Object> student = new HashMap<>();
+                student.put("name",name);
+                student.put("code",code);
+                student.put("grade",grade);
+                student.put("newGrade",newGrade);
+
+                db.collection(regNo)
+                        .add(student)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+            }
+        });
+
         return view;
     }
+
+
 }

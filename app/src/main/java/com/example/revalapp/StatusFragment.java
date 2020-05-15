@@ -76,13 +76,13 @@ public class StatusFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_status, container, false);
         TextView tv = (TextView)view.findViewById(R.id.textView4);
-        String s = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-        tv.setText("Hello " + s);
+        String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
+        tv.setText("Hello " + regNo);
         firebaseFirestore = FirebaseFirestore.getInstance();
         mFirestoreList = view.findViewById(R.id.firestore_list);
 
         //Query
-        Query query = firebaseFirestore.collection("312217205090");
+        Query query = firebaseFirestore.collection(regNo);
         //RecyclerOptions
         FirestoreRecyclerOptions<StudentRecord> options = new FirestoreRecyclerOptions.Builder<StudentRecord>()
                 .setQuery(query,StudentRecord.class)
