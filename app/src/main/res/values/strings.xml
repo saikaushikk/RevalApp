@@ -11,4 +11,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_your_details">Enter your details</string>
+    <string name="enter_your_subject_name">Enter your subject name:</string>
+    <string name="enter_your_subject_id">Enter your subject id:</string>
+    <string name="enter_your_current_grade">Enter your current grade:</string>
 </resources>
