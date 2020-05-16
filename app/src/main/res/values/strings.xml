@@ -17,4 +17,5 @@
     <string name="enter_your_current_grade">Enter Your Current Grade</string>
     <string name = "RevalStatus">Re-Evaluation Status</string>
     <string name="applicatin_heading">Application For Re-Evaluation</string>
+    <string name="choose_file">Choose File</string>
 </resources>
