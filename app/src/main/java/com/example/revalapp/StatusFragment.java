@@ -1,5 +1,7 @@
 package com.example.revalapp;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -75,9 +77,10 @@ public class StatusFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_status, container, false);
-        TextView tv = (TextView)view.findViewById(R.id.textView4);
+        //TextView tv = (TextView)view.findViewById(R.id.textView4);
         String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-        tv.setText("Hello " + regNo);
+        //tv.setText("Hello " + regNo);
+        //tv.setText("RE-EVALUATION STATUS");
         firebaseFirestore = FirebaseFirestore.getInstance();
         mFirestoreList = view.findViewById(R.id.firestore_list);
 
@@ -100,8 +103,21 @@ public class StatusFragment extends Fragment {
             protected void onBindViewHolder(@NonNull StudentViewHolder holder, int position, @NonNull StudentRecord model) {
                 holder.list_name.setText(model.getName());
                 holder.list_code.setText(model.getCode());
-                holder.list_grade.setText(model.getGrade());
-                holder.list_new_grade.setText(model.getNewGrade());
+                holder.list_grade.setText("ORIGINAL GRADE:  " + model.getGrade());
+                //Check if reval done
+                if(model.getNewGrade() == null)
+                {
+                    holder.list_new_grade.setText("Re-Evaluation Pending. Please check back later");
+                    holder.list_new_grade.setTypeface(holder.list_new_grade.getTypeface(), Typeface.BOLD);
+                }
+                else {
+                    holder.list_new_grade.setText("NEW GRADE:  " + model.getNewGrade());
+                    //if change, show in green. else red
+                    if (!model.getGrade().equalsIgnoreCase(model.getNewGrade())) {
+                        holder.list_new_grade.setTextColor(Color.parseColor("#00b300"));
+                    } else
+                        holder.list_new_grade.setTextColor(Color.parseColor("#ff0000"));
+                }
 
             }
         };

@@ -3,6 +3,7 @@ package com.example.revalapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;

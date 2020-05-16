@@ -15,4 +15,5 @@
     <string name="enter_your_subject_name">Enter your subject name:</string>
     <string name="enter_your_subject_id">Enter your subject id:</string>
     <string name="enter_your_current_grade">Enter your current grade:</string>
+    <string name = "RevalStatus">Re-Evaluation Status</string>
 </resources>

@@ -7,20 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".StatusFragment">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="237dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.977"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
     <!-- TODO: Update blank fragment layout -->
 
 
@@ -28,6 +14,7 @@
         android:id="@+id/firestore_list"
         android:layout_width="409dp"
         android:layout_height="729dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
