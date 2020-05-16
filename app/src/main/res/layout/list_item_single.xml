@@ -8,6 +8,9 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
+        android:elevation="8dp"
+        android:outlineProvider="bounds"
+        android:outlineAmbientShadowColor="@color/cardview_shadow_end_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -21,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="@android:color/white"
+            android:elevation="8dp">
 
             <!-- Title, secondary and supporting text -->
 
