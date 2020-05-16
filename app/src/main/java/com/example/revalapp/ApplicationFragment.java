@@ -1,19 +1,24 @@
 package com.example.revalapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -42,6 +47,8 @@ public class ApplicationFragment extends Fragment {
     private String code;
     private String grade;
     private String newGrade;
+
+    private TextInputLayout textInputLayout;
 
     TextView Tname ;
     TextView Tcode ;
@@ -85,9 +92,9 @@ public class ApplicationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_application, container, false);
-        TextView tv = (TextView)view.findViewById(R.id.textView5);
+        //TextView tv = (TextView)view.findViewById(R.id.textView5);
         final String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-        tv.setText("Hello " + regNo);
+        //tv.setText("Hello " + regNo);
 
         //Writing to FireStore
         Button button = view.findViewById(R.id.button2);
@@ -105,26 +112,51 @@ public class ApplicationFragment extends Fragment {
                 code = Tcode.getText().toString();
                 grade = Tgrade.getText().toString();
 
-                Map<String, Object> student = new HashMap<>();
-                student.put("name",name);
-                student.put("code",code);
-                student.put("grade",grade);
-                student.put("newGrade",newGrade);
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+                builder.setTitle("Confirm Submission");
+                builder.setMessage("Please confirm details:\n\nSubject Name: " + name +"\nSubject Code: "+ code + "\nCurrent Grade: "+ grade);
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Map<String, Object> student = new HashMap<>();
+                        student.put("name",name);
+                        student.put("code",code);
+                        student.put("grade",grade);
+                        student.put("newGrade",newGrade);
 
-                db.collection(regNo)
-                        .add(student)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
+                        db.collection(regNo)
+                                .add(student)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        MaterialAlertDialogBuilder builderApply = new MaterialAlertDialogBuilder(getContext());
+                                        builderApply.setTitle("Application Successful");
+                                        builderApply.setMessage("Re-evaluation applied for subject "+ code + "\nKindly fill form again, if you wish to apply for other subjects.");
+                                        builderApply.show();
+
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                        Tname.setText("");
+                                        Tcode.setText("");
+                                        Tgrade.setText("");
+
+
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+                    }
+                });
+                builder.show();
+
+
+
+
+
 
             }
         });
