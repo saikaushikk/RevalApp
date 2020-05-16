@@ -77,9 +77,9 @@ public class StatusFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_status, container, false);
-        //TextView tv = (TextView)view.findViewById(R.id.textView4);
+        TextView tv = (TextView)view.findViewById(R.id.textView9);
         String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-        //tv.setText("Hello " + regNo);
+        tv.setText("Hello " + regNo);
         //tv.setText("RE-EVALUATION STATUS");
         firebaseFirestore = FirebaseFirestore.getInstance();
         mFirestoreList = view.findViewById(R.id.firestore_list);

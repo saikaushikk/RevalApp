@@ -102,9 +102,9 @@ public class ApplicationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_application, container, false);
-        //TextView tv = (TextView)view.findViewById(R.id.textView5);
+        TextView tv = (TextView)view.findViewById(R.id.textView3);
         final String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-        //tv.setText("Hello " + regNo);
+        tv.setText("Hello " + regNo);
 
         //Writing to FireStore
         Button button = view.findViewById(R.id.button2);

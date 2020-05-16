@@ -18,4 +18,5 @@
     <string name = "RevalStatus">Re-Evaluation Status</string>
     <string name="applicatin_heading">Application For Re-Evaluation</string>
     <string name="choose_file">Choose File</string>
+    <string name="application_for_re_evaluation">Application For Re-Evaluation</string>
 </resources>
