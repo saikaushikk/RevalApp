@@ -26,12 +26,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -123,6 +129,42 @@ public class ApplicationFragment extends Fragment {
         //Writing to FireStore
         Button button = view.findViewById(R.id.button2);
         Tname = view.findViewById(R.id.edit_name);
+
+        //Checking if subject has already been applied
+        Tname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b)
+                {
+                    FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+                    CollectionReference yourCollRef = rootRef.collection(regNo);
+                    Query query = yourCollRef.whereEqualTo("name", Tname.getText().toString());
+                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    MaterialAlertDialogBuilder ab = new MaterialAlertDialogBuilder(getContext());
+                                    ab.setTitle("Already Applied");
+                                    ab.setMessage("You have already appllied for this subject. Kindly try again");
+                                    ab.show();
+                                    Tname.setText("");
+                                    Tcode.setText("");
+                                    Tgrade.setText("");
+                                    notif.setText("");
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+                }
+
+            }
+        });
+
         Tcode = view.findViewById(R.id.edit_code);
         Tgrade = view.findViewById(R.id.edit_grade);
         Button button1 = view.findViewById(R.id.button3);

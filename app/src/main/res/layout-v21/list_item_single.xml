@@ -8,9 +8,6 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
-        app:cardElevation="8dp"
-        android:background="@color/cardview_light_background"
-        app:cardUseCompatPadding="true"
         android:elevation="8dp"
         android:outlineProvider="bounds"
         android:outlineAmbientShadowColor="@color/cardview_shadow_end_color"
