@@ -265,11 +265,12 @@ public class ApplicationFragment extends Fragment {
 
         if(filePath != null)
         {
+            code = Tcode.getText().toString();
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
 //            progressDialog.setTitle("Uploading...");
 //            progressDialog.show();
             final String regNo = ((MyApplication) getActivity().getApplication()).getSomeVariable();
-            StorageReference ref = storageReference.child("images/"+regNo);
+            StorageReference ref = storageReference.child("images/"+regNo +"-"+code);
             ref.putFile(filePath)
 //                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 //                        @Override
